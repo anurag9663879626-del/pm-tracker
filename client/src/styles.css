@@ -1,0 +1,28 @@
+:root{--bg:#f7f8fc;--accent:#2563eb;--muted:#6b7280}
+body{font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);margin:0}
+.container{max-width:900px;margin:48px auto;padding:16px;background:#fff;border-radius:8px;box-shadow:0 8px 24px rgba(16,24,40,.08)}
+h1{color:var(--accent);margin:0 0 8px}
+
+/* Layout */
+header{padding-bottom:12px;border-bottom:1px solid #eef2f7}
+nav a{color:var(--accent);text-decoration:none;margin-right:12px}
+
+/* Forms */
+form div{margin-bottom:8px}
+label{display:block;font-size:14px;color:var(--muted);margin-bottom:6px}
+input[type="text"],input[type="email"],input[type="password"],textarea,select{width:100%;padding:8px;border:1px solid #e6e9ef;border-radius:6px;font-size:14px}
+textarea{min-height:84px}
+
+.btn{background:#f3f4f6;border:0;padding:8px 12px;border-radius:6px;cursor:pointer}
+.btn[disabled]{opacity:0.6;cursor:not-allowed}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-danger{background:#ef4444;color:#fff}
+
+.error{color:#b91c1c;background:#fff1f2;padding:8px;border-radius:6px;margin-bottom:8px}
+.success{color:#065f46;background:#ecfdf5;padding:8px;border-radius:6px;margin-bottom:8px}
+
+.project-item h3{margin:0}
+
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(0,0,0,0.1);border-left-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
