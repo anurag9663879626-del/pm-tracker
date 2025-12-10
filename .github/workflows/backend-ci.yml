@@ -39,3 +39,11 @@ jobs:
         run: |
           echo "Docker image pushed to GHCR: ghcr.io/${{ github.repository_owner }}/pm-tracker-server:latest"
           echo "To deploy to Railway, create a new service and configure it to use the image above or connect your GitHub repository to Railway."
+
+      - name: Deploy to Railway
+        if: success()
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
+        run: |
+          npm install -g @railway/cli
+          railway up --service pm-tracker-server

@@ -25,21 +25,22 @@ Next steps to deploy:
  - Backend (Railway): create a new service, set the start command to `npm start` (or use the provided Dockerfile), and configure `JWT_SECRET` and MySQL connection variables.
 CI / Deploy via GitHub Actions
 - A workflow to build and deploy the frontend to Netlify is available at `.github/workflows/deploy-frontend.yml`.
-	- Set these repository secrets in GitHub: `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID`.
+  - Set these repository secrets in GitHub: `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID`.
 
 - A workflow to build the backend Docker image and push it to GitHub Container Registry is available at `.github/workflows/backend-ci.yml`.
-	- The image will be pushed to `ghcr.io/<your-org-or-username>/pm-tracker-server:latest`.
-	- To deploy to Railway, either connect the GitHub repo to Railway or configure Railway to use the GHCR image.
+  - The image will be pushed to `ghcr.io/<your-org-or-username>/pm-tracker-server:latest`.
+  - (Optional) To automatically deploy to Railway, set the `RAILWAY_API_TOKEN` secret and the workflow will run `railway up --service pm-tracker-server` after pushing the image.
 
-Setting repository secrets (GitHub web UI):
-1. Go to your repository -> Settings -> Secrets -> Actions.
-2. Add `NETLIFY_AUTH_TOKEN`, `NETLIFY_SITE_ID`, and (optionally) `RAILWAY_API_TOKEN` if you choose to use Railway's CLI in CI.
-
-Pushing to GitHub (example commands):
+Setting repository secrets (safe method using GitHub CLI):
 ```powershell
-cd "d:\MS_AI_ML\Trimester 2\FSD\CIA4"
-git remote add origin https://github.com/<your-username>/<your-repo>.git
-git push -u origin main
+# Netlify secrets
+gh secret set NETLIFY_AUTH_TOKEN --body "<your-new-netlify-token>" --repo anurag9663879626-del/pm-tracker
+gh secret set NETLIFY_SITE_ID --body "<your-site-id>" --repo anurag9663879626-del/pm-tracker
+
+# Railway secret (optional, for automatic Railway deploy)
+gh secret set RAILWAY_API_TOKEN --body "<your-railway-api-token>" --repo anurag9663879626-del/pm-tracker
 ```
 
-If you want me to push the repo for you, I can prepare the commands but I will not use or store your credentials — you should run the push locally or provide a scoped deploy key/token.
+Alternatively, use GitHub web UI: Settings → Secrets and variables → Actions → New repository secret.
+
+Important: Never paste tokens or secrets in chat or code. Always use `gh secret set` or the web UI to add secrets to GitHub.
