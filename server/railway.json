@@ -1,0 +1,13 @@
+{
+  "name": "pm-tracker-server",
+  "startCommand": "npm start",
+  "env": [
+    "PORT",
+    "JWT_SECRET",
+    "MYSQL_HOST",
+    "MYSQL_DATABASE",
+    "MYSQL_USER",
+    "MYSQL_PASSWORD",
+    "MYSQL_PORT"
+  ]
+}
