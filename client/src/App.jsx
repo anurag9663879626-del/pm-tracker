@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route, Link, Navigate } from 'react-router-dom'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
@@ -30,9 +30,16 @@ export default function App () {
 
       <main style={{ marginTop: 20 }}>
         <Routes>
+          {/* Protected Routes - Only accessible if logged in */}
           <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          
+          {/* Public Routes - Only accessible if NOT logged in */}
+          <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login />} />
+          <Route path="/register" element={user ? <Navigate to="/" replace /> : <Register />} />
+          
+          {/* Catch all - redirect to dashboard if logged in, login if not */}
+          <Route path="*" element={user ? <Navigate to="/" replace /> : <Navigate to="/login" replace />} />
         </Routes>
       </main>
     </div>

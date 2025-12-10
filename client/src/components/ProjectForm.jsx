@@ -26,7 +26,7 @@ export default function ProjectForm ({ onSubmit, initial = {}, onCancel }) {
       {error && <div className="error">{error}</div>}
       <div>
         <label>Title</label>
-        <input value={title} onChange={e => setTitle(e.target.value)} required />
+        <input type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder="Enter project title" autoComplete="off" required />
       </div>
       <div>
         <label>Description</label>

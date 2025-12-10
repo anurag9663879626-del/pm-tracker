@@ -5,10 +5,12 @@ export const AuthContext = createContext()
 
 export function AuthProvider ({ children }) {
   const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const u = getAuthUser()
     if (u) setUser(u)
+    setLoading(false)
   }, [])
 
   const login = (token, user) => {
@@ -21,8 +23,10 @@ export function AuthProvider ({ children }) {
     setUser(null)
   }
 
+  const value = { user, login, logout, loading, isAuthenticated: !!user }
+
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   )

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { register as apiRegister } from '../services/authService'
 import { AuthContext } from '../AuthContext'
 
@@ -15,13 +15,13 @@ export default function Register () {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError(null)
-    if (!email || !password) return setError('Email and password are required')
+    if (!name || !email || !password) return setError('All fields are required')
     if (password.length < 6) return setError('Password must be at least 6 characters')
     try {
       setLoading(true)
       const res = await apiRegister({ name, email, password })
       login(res.token, res.user)
-      navigate('/')
+      setTimeout(() => navigate('/'), 100)
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed')
     } finally {
@@ -30,23 +30,30 @@ export default function Register () {
   }
 
   return (
-    <div>
-      <h2>Register</h2>
+    <div className="card" style={{ maxWidth: '400px', margin: '40px auto' }}>
+      <h2>Create an Account</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Name</label>
-          <input value={name} onChange={e => setName(e.target.value)} />
+          <label>Full Name</label>
+          <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Enter your full name" autoComplete="name" required />
         </div>
         <div>
           <label>Email</label>
-          <input value={email} onChange={e => setEmail(e.target.value)} />
+          <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your email" autoComplete="email" required />
         </div>
         <div>
           <label>Password</label>
-          <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
+          <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter your password (min 6 chars)" autoComplete="new-password" required />
         </div>
         {error && <div className="error">{error}</div>}
-        <button type="submit" className="btn btn-primary" disabled={loading}>{loading ? <span className="spinner" /> : 'Register'}</button>
+        <div style={{ marginTop: 16 }}>
+          <button type="submit" className="btn btn-primary" disabled={loading} style={{ width: '100%' }}>
+            {loading ? <><span className="spinner" />Creating account...</> : 'Register'}
+          </button>
+        </div>
+        <p style={{ textAlign: 'center', marginTop: 12, color: '#6b7280', fontSize: '14px' }}>
+          Already have an account? <Link to="/login" style={{ color: '#3b82f6', fontWeight: '600', textDecoration: 'none' }}>Login</Link>
+        </p>
       </form>
     </div>
   )
